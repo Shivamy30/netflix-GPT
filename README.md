@@ -4,7 +4,14 @@
 - Configure TailwindCSS
 
 - Header
+- Routing of App
 - LoginForm
+- Sign up From
+- Form Validation
+- useRef Hook
+- firbase setup
+- Deploying our app to production
+- Create SignUp user Account
 
 
 
