@@ -2,15 +2,22 @@ import React, { useRef, useState } from 'react'
 import Header from './Header'
 import { BACKGROUND_IMAGE } from '../utils/constants';
 import { checkValidData } from '../utils/validate';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../utils/firebase"
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { addUser } from '../utils/userSlice';
 
 
 const Login = () => {
     const [isSignInForm, setIsSignInForm] = useState(true);
+    const [errorMsg, setErrorMsg] = useState(null);
+    const navigate = useNavigate()
+    const dispatch = useDispatch();
+
     const email = useRef(null);
     const password = useRef(null);
-    const [errorMsg, setErrorMsg] = useState(null);
+    const name = useRef(null);
 
     const handleButtonClick = () => {
         const validationCheck = checkValidData(email.current.value, password.current.value);
@@ -22,24 +29,31 @@ const Login = () => {
             createUserWithEmailAndPassword(auth, email.current.value, password.current.value)
                 .then((userCredential) => {
                     const user = userCredential.user;
+                    updateProfile(user, {
+                        displayName: name.current.value, photoURL: "https://wallpapers.com/images/hd/netflix-profile-pictures-1000-x-1000-qo9h82134t9nv0j0.jpg"
+                      }).then(() => {
+                        const {uid, displayName, email, photoURL} = auth.currentUser;
+                        dispatch(addUser({uid:uid, displayName:displayName, email:email, photoURL:photoURL})); 
+                        navigate("/browse")
+                      }).catch((error) => {
+                        
+                      });
                 })
                 .catch((error) => {
-                    const errorCode = error.code;
+                    // const errorCode = error.code;
                     const errorMessage = error.message;
-                    console.log(error)
                     setErrorMsg(errorMessage)
                 });
         } else {
             signInWithEmailAndPassword(auth,email.current.value, password.current.value)
                 .then((userCredential) => {
                     const user = userCredential.user;
-                    console.log(user);
+                    navigate("/browse")
                 })
                 .catch((error) => {
-                    const errorCode = error.code;
+                    // const errorCode = error.code;
                     const errorMessage = error.message;
                     setErrorMsg(errorMessage);
-                    console.log(errorMessage)
 
                 });
         }
@@ -55,7 +69,7 @@ const Login = () => {
             <form onSubmit={(e) => e.preventDefault()}
                 className='bg-black absolute p-12 w-96 my-32 mx-auto text-white right-0 left-0 rounded-lg bg-opacity-80 max-sm:w-full max-sm:my-0 max-sm:h-full max-sm:flex max-sm:justify-center max-sm:flex-col'>
                 <h1 className='font-bold text-3xl pt-3 pb-5'>{isSignInForm ? "Sign In" : "Sign Up"}</h1>
-                {!isSignInForm && <input className='p-3 my-2 w-full bg-gray-600 rounded-lg' type='text' placeholder='Full Name' />}
+                {!isSignInForm && <input ref={name} minLength={3} className='p-3 my-2 w-full bg-gray-600 rounded-lg' type='text' placeholder='Full Name' />}
                 <input ref={email} className='p-3 my-2 w-full bg-gray-600 rounded-lg' type='email' placeholder='Email' />
                 <input ref={password} className='p-3 my-2 w-full bg-gray-600 rounded-lg' type='password' placeholder='Password' />
                 {errorMsg && <p className='text-red-500'>⚠️ {errorMsg}</p>}

@@ -12,6 +12,10 @@
 - firbase setup
 - Deploying our app to production
 - Create SignUp user Account
+- Implement Sign in User Api
+- Created Redux Store with userSlice
+- Implemented Sign Out feature
+- Update Profile
 
 
 
