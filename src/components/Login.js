@@ -1,18 +1,16 @@
 import React, { useRef, useState } from 'react'
 import Header from './Header'
-import { BACKGROUND_IMAGE } from '../utils/constants';
+import { BACKGROUND_IMAGE, getNetflixProfileImageUrl } from '../utils/constants';
 import { checkValidData } from '../utils/validate';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../utils/firebase"
-import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+ import { useDispatch } from 'react-redux';
 import { addUser } from '../utils/userSlice';
 
 
 const Login = () => {
     const [isSignInForm, setIsSignInForm] = useState(true);
     const [errorMsg, setErrorMsg] = useState(null);
-    const navigate = useNavigate()
     const dispatch = useDispatch();
 
     const email = useRef(null);
@@ -30,11 +28,10 @@ const Login = () => {
                 .then((userCredential) => {
                     const user = userCredential.user;
                     updateProfile(user, {
-                        displayName: name.current.value, photoURL: "https://wallpapers.com/images/hd/netflix-profile-pictures-1000-x-1000-qo9h82134t9nv0j0.jpg"
+                        displayName: name.current.value, photoURL: getNetflixProfileImageUrl()
                       }).then(() => {
                         const {uid, displayName, email, photoURL} = auth.currentUser;
                         dispatch(addUser({uid:uid, displayName:displayName, email:email, photoURL:photoURL})); 
-                        navigate("/browse")
                       }).catch((error) => {
                         
                       });
@@ -48,7 +45,6 @@ const Login = () => {
             signInWithEmailAndPassword(auth,email.current.value, password.current.value)
                 .then((userCredential) => {
                     const user = userCredential.user;
-                    navigate("/browse")
                 })
                 .catch((error) => {
                     // const errorCode = error.code;
@@ -63,7 +59,7 @@ const Login = () => {
             <Header />
             <div className='absolute'>
                 <img className='h-screen w-screen'
-                    alt='background-image'
+                    alt='background'
                     src={BACKGROUND_IMAGE} />
             </div>
             <form onSubmit={(e) => e.preventDefault()}
