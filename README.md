@@ -27,6 +27,10 @@
 - Embedded the YouTube video and make it autoplay and mute
 - tailwind classes to make maincontainer look awesome
 
+- GPT Search page
+- GPT Search Bar
+- Multi-language feature in GPT seach page
+
 
 
 # Features
