@@ -31,6 +31,14 @@
 - GPT Search Bar
 - Multi-language feature in GPT seach page
 
+- Get Open AI Api key
+- Gpt Search API call
+- fetched gptMovies suggestions from TMDB
+- created GPT slice added data
+- Reused movie list component to make movie suggestion container
+- Memoization
+- Added .env
+- Made our App Responsive
 
 
 # Features

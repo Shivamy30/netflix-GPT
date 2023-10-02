@@ -19,7 +19,7 @@ export const options = {
     method: 'GET',
     headers: {
         accept: 'application/json',
-        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0ZWM3OGFiMzA1NTg4MWNmOWNlYzgxZjRmODcxODExNyIsInN1YiI6IjY1MTdjZTczOTNiZDY5MDEzOGZkNWE4MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.TMYn0RkgbOQ_O0E2ZK-Jop8udw9Fr3k5rNBkrzulddU'
+        Authorization: 'Bearer '+ process.env.REACT_APP_TMDB_KEY
     }
 };
 
@@ -28,3 +28,8 @@ export const IMG_CDN_URL = "https://image.tmdb.org/t/p/w500";
 
 export const SUPPORTED_LANGUAGES = [{identifier: 'en', language: 'English'},
 {identifier: 'hindi', language: 'Hindi'},{identifier: 'spanish', language: 'Spanish'}]
+
+
+export const OPENAI_key = process.env.REACT_APP_OPENAI_KEY;
+
+export const GPT_PAGE_BG_IMAGE = "https://media.istockphoto.com/id/1295114854/photo/empty-red-armchairs-of-a-theater-ready-for-a-show.jpg?s=612x612&w=0&k=20&c=0rDtwzMmLbqe_8GuGw2dpjkD0MsXGywJmdmg0jDbMxQ="
