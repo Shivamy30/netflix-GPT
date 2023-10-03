@@ -43,32 +43,32 @@ const Header = () => {
         dispatch(toggleShowGptSearch())
     };
 
-    const handleLangChange = (e)=>{
+    const handleLangChange = (e) => {
         dispatch(changeLanguage(e.target.value));
     }
 
     return (
         <div className=' absolute w-screen h-16 z-10 px-8 py-2 bg-gradient-to-b from-black flex flex-col sm:flex-row sm:justify-between'>
-            <img className='w-44 m-auto sm:m-0 h-16'
+            <img className='w-44 m-auto sm:m-0 h-16 max-sm:w-24'
                 alt='logo'
                 src={LOGO} />
             {user &&
                 <div className='flex m-auto sm:m-0'>
-                   {showGptSearch && <select onChange={handleLangChange}
-                   defaultValue={langKey}
-                    name='lang' className='m-1 px-2 pt-2 pb-3 bg-gray-900 text-white rounded-lg'>
+                    {showGptSearch && <select onChange={handleLangChange}
+                        defaultValue={langKey}
+                        name='lang' className='m-1 px-2 pt-2 pb-3 bg-gray-900 text-white rounded-lg'>
                         {SUPPORTED_LANGUAGES.map((lang) => (
                             <option key={lang.identifier} value={lang.identifier}>{lang.language}</option>))
                         }
                     </select>}
                     <button onClick={handleGptSeachClick}
-                        className=' m-1 px-2 pt-2 pb-3 text-white bg-purple-800 rounded-lg'>
-                            {showGptSearch?"Home Page":"GPT Search"}</button>
-                    <img
-                        className='w-9 h-9 m-2'
+                        className=' m-1 px-2 pt-2 pb-3 text-white bg-purple-800 rounded-lg '>
+                        {showGptSearch ? "Home Page" : "GPT Search"}</button>
+                    {<img
+                        className='w-9 h-9 m-2 hidden sm:inline-block'
                         alt='user-icon'
                         src={user?.photoURL}
-                    />
+                    />}
                     <button onClick={handleSignOut} className='font-bold text-white bg-slate-500 rounded-lg m-1 px-2 pt-2 pb-3'>(Sign Out)</button>
                 </div>}
         </div>
